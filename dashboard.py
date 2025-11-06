@@ -157,7 +157,7 @@ if menu == "Overview":
         st.error(f"Error fetching data: {e}")
 
 elif menu == "Exploratory Data Analysis":
-    st.markdown(f"<h2 style='color:{heading_colors['eda']}'>Exploratory Data Analysis — Genres & Ratings</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='color:{heading_colors['eda']}'>Exploratory Data Analysis - Genres & Ratings</h2>", unsafe_allow_html=True)
     try:
         pipeline = [
             {"$unwind": "$genres"},
@@ -179,7 +179,7 @@ elif menu == "Exploratory Data Analysis":
         st.error(f"EDA error: {e}")
 
 elif menu == "Time Trends":
-    st.markdown(f"<h2 style='color:{heading_colors['time']}'>Time Trends — IMDb Ratings Over Time</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='color:{heading_colors['time']}'>Time Trends - IMDb Ratings Over Time</h2>", unsafe_allow_html=True)
     try:
         pipeline_year = [
             {"$match": {"year": {"$gte": 1900}, "imdb.rating": {"$ne": None}}},
@@ -203,7 +203,7 @@ elif menu == "Time Trends":
         st.error(f"Time trend error: {e}")
 
 elif menu == "Text Analysis":
-    st.markdown(f"<h2 style='color:{heading_colors['text']}'>Text Analysis — WordCloud & Common Phrases</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='color:{heading_colors['text']}'>Text Analysis - WordCloud & Common Phrases</h2>", unsafe_allow_html=True)
     try:
         docs = list(movies_col.find({}, {"plot": 1, "title": 1, "_id": 0}).limit(3000))
         df = pd.DataFrame(docs)
@@ -226,7 +226,7 @@ elif menu == "Text Analysis":
         st.error(f"Text analysis error: {e}")
 
 elif menu == "Topic Modeling":
-    st.markdown(f"<h2 style='color:{heading_colors['topic']}'>Topic Modeling — Discover Hidden Themes (NMF)</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='color:{heading_colors['topic']}'>Topic Modeling - Discover Hidden Themes (NMF)</h2>", unsafe_allow_html=True)
     try:
         docs = list(movies_col.find({}, {"plot": 1, "_id": 0}).limit(2000))
         df = pd.DataFrame(docs)
@@ -258,7 +258,7 @@ elif menu == "Topic Modeling":
         st.error(f"Topic modeling error: {e}")
 
 elif menu == "Storytelling / Narrative":
-    st.markdown(f"<h2 style='color:{heading_colors['story']}'>Narrative — Analytical Purpose and Context</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='color:{heading_colors['story']}'>Narrative - Analytical Purpose and Context</h2>", unsafe_allow_html=True)
     st.markdown(f"""
     <div style='color:black; font-size:16px;'>
     The <b style='color:{heading_colors["main"]}'>Azure Movie Analytics Dashboard</b> demonstrates how a 
@@ -267,7 +267,7 @@ elif menu == "Storytelling / Narrative":
 
     <br><br>
     <b style='color:{heading_colors["eda"]}'>Purpose:</b><br>
-    Transform unstructured movie data into meaningful insights — genres, trends, and text-based themes —
+    Transform unstructured movie data into meaningful insights - genres, trends, and text-based themes —
     enabling dynamic exploration without writing queries.
 
     <br><br>
