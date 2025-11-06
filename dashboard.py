@@ -1,5 +1,5 @@
 # =============================================================
-# AZURE MOVIE ANALYTICS DASHBOARD — Streamlit Cloud Version
+# AZURE MOVIE ANALYTICS DASHBOARD - Streamlit Cloud Version
 # =============================================================
 
 import streamlit as st
@@ -12,9 +12,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.decomposition import NMF
 import re
 
-# -------------------------------------------------------------
+# ----------------------------------
 # CONFIGURATION
-# -------------------------------------------------------------
+# ----------------------------------
 st.set_page_config(
     page_title="Azure Movie Analytics Dashboard",
     layout="wide"
@@ -44,9 +44,9 @@ heading_colors = {
 
 chart_colors = ["#0066cc", "#009999", "#ff6600", "#9933ff", "#33cc33"]
 
-# -------------------------------------------------------------
+# --------------------------------------------------
 # MONGO CONNECTION (via Streamlit Secrets)
-# -------------------------------------------------------------
+# --------------------------------------------------
 MONGO_URI = st.secrets.get("MONGO_URI", "")
 DB_NAME = st.secrets.get("DB_NAME", "sample_mflix")
 
@@ -64,9 +64,9 @@ def connect_db():
 db = connect_db()
 movies_col = db["movies"] if db is not None else None
 
-# -------------------------------------------------------------
+# -----------------------------------------------------
 # HELPER FUNCTIONS
-# -------------------------------------------------------------
+# -----------------------------------------------------
 def clean_text(text):
     if not isinstance(text, str):
         return ""
@@ -75,7 +75,7 @@ def clean_text(text):
 
 def create_wordcloud(text, title):
     if not text or len(text.strip()) == 0:
-        st.warning("⚠️ Not enough text data to generate a WordCloud.")
+        st.warning("Not enough text data to generate a WordCloud.")
         return
     try:
         wc = WordCloud(width=1200, height=500, background_color="white", colormap="Set2")
@@ -90,10 +90,10 @@ def df_download_button(df, filename, label="📥 Download CSV"):
     csv = df.to_csv(index=False).encode("utf-8")
     st.download_button(label=label, data=csv, file_name=f"{filename}.csv", mime="text/csv")
 
-# -------------------------------------------------------------
+# ---------------------------------------------
 # SIDEBAR NAVIGATION
-# -------------------------------------------------------------
-st.sidebar.header("📊 Dashboard Navigation")
+# ---------------------------------------------
+st.sidebar.header("Dashboard Navigation")
 menu = st.sidebar.radio(
     "Select Section:",
     [
@@ -124,17 +124,17 @@ st.caption("Interactive analysis of movie data stored in Azure Cosmos DB (Mongo 
 col1, col2, col3 = st.columns(3)
 with col1:
     total = movies_col.count_documents({}) if movies_col is not None else 0
-    st.markdown(f"<h4 style='color:{heading_colors['overview']}'>🎞️ Total Movies</h4>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='color:{heading_colors['overview']}'>Total Movies</h4>", unsafe_allow_html=True)
     st.metric("", f"{total:,}")
 with col2:
     unique_genres = len(movies_col.distinct("genres")) if movies_col is not None else 0
-    st.markdown(f"<h4 style='color:{heading_colors['eda']}'>🎭 Unique Genres</h4>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='color:{heading_colors['eda']}'>Unique Genres</h4>", unsafe_allow_html=True)
     st.metric("", unique_genres)
 with col3:
     try:
         avg_rating = movies_col.aggregate([{"$group": {"_id": None, "avg": {"$avg": "$imdb.rating"}}}])
         avg = round(list(avg_rating)[0]["avg"], 2) if movies_col is not None else 0
-        st.markdown(f"<h4 style='color:{heading_colors['time']}'>⭐ Average IMDb Rating</h4>", unsafe_allow_html=True)
+        st.markdown(f"<h4 style='color:{heading_colors['time']}'>Average IMDb Rating</h4>", unsafe_allow_html=True)
         st.metric("", avg)
     except:
         st.metric("Average IMDb Rating", "N/A")
@@ -251,7 +251,7 @@ elif menu == "Topic Modeling":
                 "Topic": [f"Topic {i+1}" for i in range(len(topic_words_list))],
                 "Top Words": topic_words_list
             })
-            df_download_button(topic_df, "topics", "📥 Download Topics (CSV)")
+            df_download_button(topic_df, "topics", "Download Topics (CSV)")
         else:
             st.warning("Not enough data for topic modeling.")
     except Exception as e:
@@ -266,19 +266,19 @@ elif menu == "Storytelling / Narrative":
     can power real-time analytics using <b>Streamlit</b> visualizations.
 
     <br><br>
-    <b style='color:{heading_colors["eda"]}'>🎯 Purpose:</b><br>
+    <b style='color:{heading_colors["eda"]}'>Purpose:</b><br>
     Transform unstructured movie data into meaningful insights — genres, trends, and text-based themes —
     enabling dynamic exploration without writing queries.
 
     <br><br>
-    <b style='color:{heading_colors["time"]}'>📊 Analytical Value:</b><br>
+    <b style='color:{heading_colors["time"]}'>Analytical Value:</b><br>
     - Genre and rating distributions  
     - IMDb trends across decades  
     - Common word and phrase analysis  
     - Topic discovery using NMF  
 
     <br><br>
-    <b style='color:{heading_colors["topic"]}'>💡 Decision-Making Impact:</b><br>
+    <b style='color:{heading_colors["topic"]}'>Decision-Making Impact:</b><br>
     - <b>Retail/Streaming:</b> Identify popular genres and themes for recommendations.  
     - <b>Education:</b> Demonstrate applied Big Data and ML techniques.  
     - <b>IoT/Cloud:</b> Showcase scalable NoSQL-driven analytics.
