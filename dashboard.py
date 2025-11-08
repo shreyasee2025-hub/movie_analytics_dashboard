@@ -145,9 +145,10 @@ st.markdown("---")
 # PAGE LOGIC
 # -------------------------------------------------------------
 if menu == "Overview":
+    st.success("Connected successfully to Azure Cosmos DB!")
     st.markdown(f"<h2 style='color:{heading_colors['overview']}'>Database Overview</h2>", unsafe_allow_html=True)
     try:
-        st.success("Connected successfully to Azure Cosmos DB!")
+        
         collections = db.list_collection_names()
         st.write("**Available Collections:**", collections)
         st.subheader("Sample Document:")
