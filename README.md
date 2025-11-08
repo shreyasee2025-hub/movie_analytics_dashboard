@@ -1,6 +1,9 @@
 Project: Azure Movie Analytics Dashboard
+
 Student: Shreyasee Poddar
+
 Course: DSA 508 - Big Data Platforms
+
 Professor: Daniel Hernando Romero Rodriguez Sr.
 
 Contents:
