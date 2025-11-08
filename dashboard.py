@@ -147,12 +147,12 @@ st.markdown("---")
 if menu == "Overview":
     st.markdown(f"<h2 style='color:{heading_colors['overview']}'>Database Overview</h2>", unsafe_allow_html=True)
     try:
+        st.success("Connected successfully to Azure Cosmos DB!")
         collections = db.list_collection_names()
         st.write("**Available Collections:**", collections)
         st.subheader("Sample Document:")
         sample_doc = movies_col.find_one({}, {"title": 1, "year": 1, "genres": 1, "imdb": 1, "_id": 0})
         st.json(sample_doc)
-        st.success("Connected successfully to Azure Cosmos DB!")
     except Exception as e:
         st.error(f"Error fetching data: {e}")
 
